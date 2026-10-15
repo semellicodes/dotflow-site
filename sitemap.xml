@@ -3,7 +3,7 @@
   Dotflow — sitemap.
 
   TROCAR AO MIGRAR PARA O DOMÍNIO PRÓPRIO:
-  1. troque https://dotflow.vercel.app/ por https://dotflow.com.br/ no <loc>;
+  1. troque https://dotflowweb.vercel.app/ por https://dotflow.com.br/ no <loc>;
   2. atualize <lastmod> para a data da mudança;
   3. reenvie o sitemap no Google Search Console com o novo domínio.
 
@@ -12,7 +12,7 @@
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dotflow.vercel.app/</loc>
+    <loc>https://dotflowweb.vercel.app/</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
