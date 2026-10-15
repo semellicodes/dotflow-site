@@ -1,0 +1,10 @@
+# Dotflow — site institucional
+# Site de uma página só: tudo é público e indexável.
+
+User-agent: *
+Allow: /
+
+# TROCAR AO MIGRAR PARA O DOMÍNIO PRÓPRIO:
+# substitua a linha abaixo por
+#   Sitemap: https://dotflow.com.br/sitemap.xml
+Sitemap: https://dotflow.vercel.app/sitemap.xml
