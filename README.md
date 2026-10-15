@@ -131,16 +131,28 @@ Cloudflare Pages ou um servidor comum. **Não há build**: sem `package.json`, s
 bundler. No Vercel: framework *Other*, build command vazio, output a raiz do repo.
 Nenhuma variável de ambiente é necessária.
 
-### Ao migrar para o domínio próprio
+### Domínios
 
-O site está publicado em `dotflow.vercel.app`. Quando `dotflow.com.br` entrar:
+O site responde em **dotflowweb.com.br**, que é o domínio marcado como *Production*
+na Vercel. O `www.dotflowweb.com.br` redireciona para ele com 308, e o
+`dotflowweb.vercel.app` continua ativo.
 
-1. `index.html` — descomente o bloco "DOMÍNIO PRÓPRIO" (canonical e og:url).
-2. `index.html` — troque o domínio em `og:image` e `twitter:image`.
-3. `robots.txt` — troque a linha `Sitemap:`.
-4. `sitemap.xml` — troque o `<loc>` e atualize o `<lastmod>`.
+Se o domínio principal mudar, quatro lugares precisam acompanhar — senão o canonical
+e a prévia de compartilhamento apontam para um endereço que não serve o site:
 
-Cada arquivo tem o comentário indicando exatamente o que mudar.
+| Arquivo | O quê |
+|---|---|
+| `index.html` | `canonical` e `og:url` |
+| `index.html` | `og:image` e `twitter:image` |
+| `robots.txt` | linha `Sitemap:` |
+| `sitemap.xml` | `<loc>` e `<lastmod>` |
+
+> **Armadilha ao trocar de domínio:** a ativação do FormSubmit é por **domínio**, não
+> só por endpoint. Num endereço novo o formulário volta a responder
+> `"This form needs Activation"` e **para de enviar** até alguém clicar no link de
+> ativação que chega por e-mail. O visitante só vê a mensagem de erro e vai embora,
+> sem avisar ninguém. Por isso, **o primeiro teste depois de apontar qualquer
+> domínio novo é enviar o formulário** e confirmar a chegada do e-mail.
 
 ## Rodapé
 

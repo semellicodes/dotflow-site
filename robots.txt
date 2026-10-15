@@ -4,7 +4,4 @@
 User-agent: *
 Allow: /
 
-# TROCAR AO MIGRAR PARA O DOMÍNIO PRÓPRIO:
-# substitua a linha abaixo por
-#   Sitemap: https://dotflow.com.br/sitemap.xml
-Sitemap: https://dotflowweb.vercel.app/sitemap.xml
+Sitemap: https://dotflowweb.com.br/sitemap.xml
