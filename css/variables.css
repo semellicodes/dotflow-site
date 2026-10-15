@@ -1,0 +1,182 @@
+/* ============================================================
+   Dotflow — tokens de design
+   As duas paletas ficam declaradas lado a lado e o tema só
+   troca qual delas alimenta os tokens de uso (--bg, --fg, ...).
+   Assim nenhum valor aparece duas vezes.
+   ============================================================ */
+
+:root {
+  /* --- cores da marca, iguais nos dois temas --- */
+  --lavanda: #A78BFA;
+  --lavanda-soft: #EDE9FE;
+  --grafite: #1F1F24;
+  --off: #F8F8F6;
+
+  /* --- paleta clara --- */
+  --c-bg: #F8F8F6;
+  --c-surface: #FFFFFF;
+  --c-secao-alt: #F1F1EE;   /* seção Planos: separa os cards brancos do fundo */
+  --c-fg: #1F1F24;
+  --c-muted: #5E5E6B;
+  --c-line: rgba(31, 31, 36, .12);
+  --c-line-forte: #8A8A96;          /* bordas de campo: 3,41:1 em branco */
+  --c-accent-forte: #6D28D9;        /* lavanda escurecida p/ texto: 6,68:1 */
+  --c-tag-bg: #EDE9FE;
+  --c-erro: #B91C1C;
+  --c-placeholder: #6B6B75;
+  --c-sombra: 0 1px 2px rgba(31, 31, 36, .05), 0 10px 30px -22px rgba(31, 31, 36, .35);
+  /* faixas (hero, Sobre, CTA) no tema claro */
+  --c-faixa-bg: #FFFFFF;
+  --c-faixa-fg: #1F1F24;
+  --c-faixa-fg2: #5E5E6B;
+  --c-faixa-fg3: #6B6B75;
+  --c-faixa-line: rgba(31, 31, 36, .12);
+  --c-faixa-borda: #8A8A96;
+  --c-faixa-brilho: rgba(167, 139, 250, .16);
+  /* ilustrações: superfícies e traços dentro dos SVGs */
+  --c-ui-bg: #F4F4F2;
+  --c-ui-card1: #FFFFFF;
+  --c-ui-card2: #F1F1EE;
+  --c-ui-linha: #D7D7DD;
+  --c-ui-linha2: #E4E4E8;
+  --c-ui-ponto: #BFBFC8;
+  --c-ui-texto: #6B6B75;
+  --c-ui-borda: rgba(31, 31, 36, .12);
+
+  /* --- paleta escura --- */
+  --e-bg: #131317;
+  --e-surface: #1B1B21;
+  --e-secao-alt: #17171C;
+  --e-fg: #F4F4F2;
+  --e-muted: #A1A1AC;
+  --e-line: rgba(255, 255, 255, .10);
+  --e-line-forte: rgba(255, 255, 255, .28);
+  --e-accent-forte: #A78BFA;
+  --e-tag-bg: rgba(167, 139, 250, .14);
+  --e-erro: #F87171;
+  --e-placeholder: #85858F;
+  --e-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -22px rgba(0, 0, 0, .8);
+  /* faixas no tema escuro: o visual atual da marca */
+  --e-faixa-bg: #1F1F24;
+  --e-faixa-fg: #F4F4F2;
+  --e-faixa-fg2: #B9B9C4;
+  --e-faixa-fg3: #9A9AA8;
+  --e-faixa-line: rgba(255, 255, 255, .09);
+  --e-faixa-borda: rgba(255, 255, 255, .2);
+  --e-faixa-brilho: rgba(167, 139, 250, .16);
+  --e-ui-bg: #15151A;
+  --e-ui-card1: #24242D;
+  --e-ui-card2: #17171D;
+  --e-ui-linha: #34343F;
+  --e-ui-linha2: #2C2C36;
+  --e-ui-ponto: #3C3C48;
+  --e-ui-texto: #80808F;
+  --e-ui-borda: rgba(255, 255, 255, .09);
+
+  /* --- tokens de uso: tema claro é o valor base --- */
+  --bg: var(--c-bg);
+  --surface: var(--c-surface);
+  --secao-alt: var(--c-secao-alt);
+  --fg: var(--c-fg);
+  --muted: var(--c-muted);
+  --line: var(--c-line);
+  --line-forte: var(--c-line-forte);
+  --accent-forte: var(--c-accent-forte);
+  --tag-bg: var(--c-tag-bg);
+  --erro: var(--c-erro);
+  --placeholder: var(--c-placeholder);
+  --sombra: var(--c-sombra);
+
+  /* --- faixas (hero, Sobre, CTA) e ilustrações: acompanham o tema --- */
+  --faixa-bg: var(--c-faixa-bg);
+  --faixa-fg: var(--c-faixa-fg);
+  --faixa-fg2: var(--c-faixa-fg2);
+  --faixa-fg3: var(--c-faixa-fg3);
+  --faixa-line: var(--c-faixa-line);
+  --faixa-borda: var(--c-faixa-borda);
+  --faixa-brilho: var(--c-faixa-brilho);
+  --ui-bg: var(--c-ui-bg);
+  --ui-card1: var(--c-ui-card1);
+  --ui-card2: var(--c-ui-card2);
+  --ui-linha: var(--c-ui-linha);
+  --ui-linha2: var(--c-ui-linha2);
+  --ui-ponto: var(--c-ui-ponto);
+  --ui-texto: var(--c-ui-texto);
+  --ui-borda: var(--c-ui-borda);
+
+  /* --- medidas --- */
+  --max: 1120px;
+  --raio: 16px;
+  --raio-g: 24px;
+  --raio-p: 12px;
+
+  color-scheme: light;
+}
+
+/* Tema escuro escolhido pela pessoa (ou aplicado pelo script antiflash) */
+:root[data-tema="escuro"] {
+  --bg: var(--e-bg);
+  --surface: var(--e-surface);
+  --secao-alt: var(--e-secao-alt);
+  --fg: var(--e-fg);
+  --muted: var(--e-muted);
+  --line: var(--e-line);
+  --line-forte: var(--e-line-forte);
+  --accent-forte: var(--e-accent-forte);
+  --tag-bg: var(--e-tag-bg);
+  --erro: var(--e-erro);
+  --placeholder: var(--e-placeholder);
+  --sombra: var(--e-sombra);
+  --faixa-bg: var(--e-faixa-bg);
+  --faixa-fg: var(--e-faixa-fg);
+  --faixa-fg2: var(--e-faixa-fg2);
+  --faixa-fg3: var(--e-faixa-fg3);
+  --faixa-line: var(--e-faixa-line);
+  --faixa-borda: var(--e-faixa-borda);
+  --faixa-brilho: var(--e-faixa-brilho);
+  --ui-bg: var(--e-ui-bg);
+  --ui-card1: var(--e-ui-card1);
+  --ui-card2: var(--e-ui-card2);
+  --ui-linha: var(--e-ui-linha);
+  --ui-linha2: var(--e-ui-linha2);
+  --ui-ponto: var(--e-ui-ponto);
+  --ui-texto: var(--e-ui-texto);
+  --ui-borda: var(--e-ui-borda);
+
+  color-scheme: dark;
+}
+
+/* Sem JavaScript o atributo nunca é escrito: respeita o sistema assim mesmo. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema]) {
+    --bg: var(--e-bg);
+    --surface: var(--e-surface);
+    --secao-alt: var(--e-secao-alt);
+    --fg: var(--e-fg);
+    --muted: var(--e-muted);
+    --line: var(--e-line);
+    --line-forte: var(--e-line-forte);
+    --accent-forte: var(--e-accent-forte);
+    --tag-bg: var(--e-tag-bg);
+    --erro: var(--e-erro);
+    --placeholder: var(--e-placeholder);
+    --sombra: var(--e-sombra);
+    --faixa-bg: var(--e-faixa-bg);
+    --faixa-fg: var(--e-faixa-fg);
+    --faixa-fg2: var(--e-faixa-fg2);
+    --faixa-fg3: var(--e-faixa-fg3);
+    --faixa-line: var(--e-faixa-line);
+    --faixa-borda: var(--e-faixa-borda);
+    --faixa-brilho: var(--e-faixa-brilho);
+    --ui-bg: var(--e-ui-bg);
+    --ui-card1: var(--e-ui-card1);
+    --ui-card2: var(--e-ui-card2);
+    --ui-linha: var(--e-ui-linha);
+    --ui-linha2: var(--e-ui-linha2);
+    --ui-ponto: var(--e-ui-ponto);
+    --ui-texto: var(--e-ui-texto);
+    --ui-borda: var(--e-ui-borda);
+
+    color-scheme: dark;
+  }
+}

@@ -1,0 +1,40 @@
+/* ============================================================
+   Dotflow — ajustes responsivos
+   Carregado depois de style.css; só contém media queries.
+   ============================================================ */
+
+@media (max-width:1040px){
+  .cols-4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr; gap:36px; padding-top:52px; padding-bottom:60px}
+  .fluxo-rotulo{font-size:13px; letter-spacing:.1em}
+  .sobre-etapa{font-size:18px}
+  .sobre-num{font-size:11.5px}
+  .hero-art{max-width:300px; margin:0 auto}
+  .sobre-topo{grid-template-columns:1fr; gap:32px}
+  .sobre-arte{max-width:400px; margin:0 auto}
+  #sobre{padding:72px 0 68px}
+  .sobre-base,#sobre .stats{margin-top:48px; padding-top:32px}
+  .cols-4,.stats{grid-template-columns:repeat(2,1fr)}
+  /* tablet: a marca ocupa a linha inteira e as duas listas dividem a de baixo */
+  .rodape{grid-template-columns:repeat(2,minmax(0,1fr)); gap:36px 32px}
+  .rodape-marca{grid-column:1 / -1; max-width:48ch}
+}
+@media (max-width:640px){
+  header nav{display:none}
+  header nav.open{display:flex; position:absolute; top:72px; left:0; right:0; flex-direction:column; gap:18px; padding:20px 16px; background:var(--bg); border-bottom:1px solid var(--line)}
+  .menu-toggle{display:flex}
+  header .btn-primary{display:none}
+  header .wrap{gap:10px}
+  .acoes-header{gap:0; margin-left:auto}
+  .menu-toggle{margin-right:-12px}
+  .cols-4,.stats{grid-template-columns:1fr}
+  .cta{padding:44px 24px}
+  /* celular: tudo empilhado, com o mesmo respiro entre blocos */
+  .rodape{grid-template-columns:1fr; gap:32px}
+  .rodape-marca{grid-column:auto}
+  .rodape-base{flex-direction:column; gap:6px; margin-top:32px}
+  footer{padding:44px 0 24px}
+  section{padding:64px 0}
+}

@@ -1,0 +1,268 @@
+/* ============================================================
+   Dotflow — layout, componentes e seções
+   Depende de css/variables.css (tokens) e é complementado por
+   css/responsive.css (media queries).
+   ============================================================ */
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+section,#top{scroll-margin-top:88px}
+img,svg{max-width:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
+  font-weight:400; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--max); margin:0 auto; padding:0 16px}
+a{color:inherit; text-decoration:none}
+
+/* logo */
+.logo{display:flex; align-items:center; gap:10px; font-weight:600; font-size:22px; letter-spacing:-.02em}
+.logo svg{display:block}
+.logo small{display:block; font-size:10px; font-weight:400; letter-spacing:.14em; color:var(--muted); text-transform:lowercase}
+
+/* header */
+header{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+header .wrap{display:flex; align-items:center; justify-content:space-between; height:72px; gap:24px}
+header nav{display:flex; gap:28px; font-size:14px; color:var(--muted)}
+header nav a:hover{color:var(--fg)}
+.btn{display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:999px; font-size:14px; font-weight:600; border:1px solid transparent; transition:.2s transform,.2s opacity}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--lavanda); color:#15151A}
+.btn-ghost{border-color:var(--line-forte); color:var(--fg)}
+.hero .btn-ghost,#sobre .btn-ghost,.cta .btn-ghost{color:var(--faixa-fg); border-color:var(--faixa-borda)}
+.cta label{color:var(--faixa-fg3)}
+.menu-toggle{display:none; background:none; border:0; color:inherit; font-size:24px; cursor:pointer;
+  width:44px; height:44px; align-items:center; justify-content:center; margin-right:-10px}
+:focus-visible{outline:2px solid var(--accent-forte); outline-offset:3px; border-radius:6px}
+
+
+/* hero */
+.hero{position:relative; overflow:hidden; background:var(--faixa-bg); color:var(--faixa-fg)}
+.hero .wrap{display:grid; grid-template-columns:1fr 42%; gap:40px; align-items:center; padding-top:68px; padding-bottom:76px}
+.hero h1{font-size:clamp(34px,5.2vw,62px); line-height:1.08; letter-spacing:-.03em; font-weight:600; margin:0 0 20px}
+.hero h1 em{font-style:normal; color:var(--accent-forte)}
+.hero p{color:var(--faixa-fg2); font-size:17px; max-width:46ch; margin:0 0 32px}
+.eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-forte); margin-bottom:20px}
+.eyebrow::before{content:""; width:7px; height:7px; border-radius:50%; background:var(--accent-forte)}
+/* composição de fluxo do hero */
+.hero-art{aspect-ratio:1/.82; width:100%; max-width:350px; margin-left:auto; border-radius:20px; position:relative; overflow:hidden;
+  border:1px solid var(--ui-borda); box-shadow:var(--sombra);
+  background:
+    radial-gradient(85% 75% at 22% 12%, rgba(167,139,250,.20), transparent 62%),
+    radial-gradient(80% 70% at 88% 92%, rgba(109,74,220,.22), transparent 66%),
+    var(--ui-bg);}
+.hero-art svg{position:absolute; inset:0; width:100%; height:100%; display:block}
+/* --- peças das ilustrações: uma cor por papel, cada tema dá o valor --- */
+.ui-ponto{fill:var(--ui-ponto)}
+.ui-linha{fill:var(--ui-linha)}
+.ui-linha2{fill:var(--ui-linha2)}
+.ui-texto{fill:var(--ui-texto)}
+.ui-borda{stroke:var(--ui-borda)}
+.ui-pill{fill:var(--ui-card2)}
+.ui-bloco{fill:var(--ui-card2); stroke:var(--ui-borda)}
+.ui-grad1{stop-color:var(--ui-card1)}
+.ui-grad2{stop-color:var(--ui-card2)}
+.ui-sobre-roxo{fill:#FFFFFF}
+.marca-arco{stroke:var(--faixa-fg)}
+.fluxo-rotulo{font-size:10px; font-weight:500; letter-spacing:.16em; fill:var(--ui-texto); text-transform:uppercase}
+.fluxo-base{fill:none; stroke:rgba(167,139,250,.22); stroke-width:1.4}
+.fluxo-luz{fill:none; stroke:url(#df-linha); stroke-width:1.8; stroke-linecap:round;
+  stroke-dasharray:18 82; animation:fluxo-correr 5s linear infinite}
+.fluxo-luz.d2{animation-duration:6.5s; animation-delay:-1.4s}
+.fluxo-luz.d3{animation-duration:5.8s; animation-delay:-3s}
+.fluxo-luz.d4{animation-duration:7.5s; animation-delay:-2.2s}
+.flutua{animation:fluxo-flutuar 7s ease-in-out infinite; transform-box:fill-box; transform-origin:center}
+.flutua.f2{animation-duration:8.5s; animation-delay:-2.5s}
+.flutua.f3{animation-duration:9.5s; animation-delay:-4s}
+.flutua.f4{animation-duration:8s; animation-delay:-1.2s}
+.fluxo-pisca{animation:fluxo-piscar 1.4s steps(1) infinite}
+.fluxo-pulso{animation:fluxo-pulsar 2.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center}
+.fluxo-poeira{animation:fluxo-flutuar 11s ease-in-out infinite}
+@keyframes fluxo-correr{to{stroke-dashoffset:-100}}
+@keyframes fluxo-flutuar{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes fluxo-piscar{0%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes fluxo-pulsar{0%,100%{opacity:.35; transform:scale(1)}50%{opacity:.9; transform:scale(1.5)}}
+/* O anel do Sobre encosta na borda do viewBox: escala menor para não ser cortado. */
+@keyframes sobre-pulsar{0%,100%{opacity:.5; transform:scale(1)}50%{opacity:1; transform:scale(1.15)}}
+@media (prefers-reduced-motion:reduce){
+  /* Rede de segurança: antes a lista era nome por nome e qualquer animação nova
+     nascia descoberta. O !important aqui é o padrão da própria recomendação —
+     precisa vencer regras de componente sem precisar repeti-las. */
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important}
+  html{scroll-behavior:auto}
+  /* Estados de repouso: sem isso alguns elementos param num quadro estranho. */
+  .plano.destaque .btn-primary{box-shadow:0 0 0 1px rgba(255,255,255,.3) inset, 0 8px 24px -6px rgba(167,139,250,.6)}
+  .fluxo-luz{stroke-dasharray:none; opacity:.5}
+  .fluxo-particula,.sobre-particula{display:none}
+}
+
+/* sections */
+section{padding:88px 0}
+h2{font-size:clamp(26px,3.4vw,40px); line-height:1.15; letter-spacing:-.025em; font-weight:600; margin:0 0 12px}
+.lead{color:var(--muted); max-width:56ch; margin:0 0 48px}
+
+.grid{display:grid; gap:20px}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--raio); padding:28px; box-shadow:var(--sombra); transition:.2s border-color,.2s transform}
+.card:hover{border-color:var(--lavanda); transform:translateY(-3px)}
+.card h3{margin:16px 0 8px; font-size:18px; font-weight:600; letter-spacing:-.01em}
+.card p{margin:0; color:var(--muted); font-size:15px}
+.card svg{color:var(--accent-forte)}
+
+/* planos */
+#planos{background:var(--secao-alt); border-block:1px solid var(--line)}
+.planos{align-items:stretch}
+.plano{display:flex; flex-direction:column; gap:0; padding:28px 24px 26px}
+.plano .tag{align-self:flex-start; font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-forte); background:var(--tag-bg); padding:5px 11px; border-radius:999px; margin-bottom:20px;
+  white-space:nowrap; letter-spacing:.08em}
+.plano h3{margin:0; font-size:19px; font-weight:600; letter-spacing:-.015em}
+.preco{display:flex; flex-direction:column; justify-content:flex-end; min-height:78px;
+  margin:6px 0 0; font-size:30px; font-weight:600; letter-spacing:-.03em; line-height:1.1; color:var(--fg)}
+.preco .prefixo{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); line-height:1; margin-bottom:8px}
+.preco small{font-size:12.5px; font-weight:400; color:var(--muted); letter-spacing:0; line-height:1.3; margin-top:7px}
+.plano ul{list-style:none; margin:20px 0 24px; padding:0; display:grid; gap:11px; font-size:14px; line-height:1.5; color:var(--muted); flex:1}
+.plano li{position:relative; padding-left:23px}
+.plano li::before{content:""; position:absolute; left:2px; top:6px; width:8px; height:8px; border-radius:50%; background:var(--lavanda)}
+.plano .btn{justify-content:center; padding:14px 18px; white-space:nowrap}
+.plano{transition:.2s transform,.2s box-shadow,.2s border-color}
+.plano:hover{transform:translateY(-4px); border-color:var(--line); box-shadow:0 18px 40px -24px rgba(31,31,36,.45)}
+:root[data-tema="escuro"] .plano:hover{box-shadow:0 18px 40px -22px rgba(0,0,0,.9)}
+.plano.destaque:hover{box-shadow:0 20px 48px -22px var(--lavanda)}
+/* Botão do plano recomendado: gradiente claro mais um halo lavanda.
+   O gradiente para em #A78BFA — tons mais escuros reprovam no contraste
+   com o texto #15151A (4,30:1 em #8B5CF6). */
+.plano.destaque .btn-primary{
+  position:relative; overflow:hidden; isolation:isolate;
+  background:linear-gradient(135deg,#C4B5FD,#A78BFA);
+  animation:botao-pulsar 2.8s ease-in-out infinite}
+/* Onda de luz atravessando o botão de tempos em tempos, como um convite. */
+.plano.destaque .btn-primary::after{
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:linear-gradient(100deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%);
+  background-size:280% 100%; background-position:160% 0;
+  animation:botao-lampejo 4.5s ease-in-out infinite}
+.plano.destaque .btn-primary:hover,.plano.destaque:hover .btn-primary{
+  animation-play-state:paused;
+  box-shadow:0 0 0 1px rgba(255,255,255,.5) inset, 0 14px 34px -6px rgba(167,139,250,.95)}
+
+@keyframes botao-pulsar{
+  0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.3) inset,
+                     0 8px 22px -8px rgba(167,139,250,.75),
+                     0 0 0 0 rgba(167,139,250,.45)}
+  50%    {box-shadow:0 0 0 1px rgba(255,255,255,.45) inset,
+                     0 12px 30px -8px rgba(167,139,250,.95),
+                     0 0 0 10px rgba(167,139,250,0)}
+}
+@keyframes botao-lampejo{
+  0%,55%,100%{background-position:160% 0}
+  85%        {background-position:-60% 0}
+}
+.plano:hover .btn-ghost{border-color:var(--accent-forte); color:var(--accent-forte)}
+.plano .btn-ghost:hover{border-color:var(--accent-forte); color:var(--accent-forte)}
+.plano.destaque,.plano.destaque:hover{border-color:var(--lavanda); box-shadow:0 14px 44px -24px var(--lavanda)}
+.nota{max-width:62ch; margin:32px auto 0; padding:18px 24px; border:1px solid var(--line); border-radius:14px;
+  font-size:14px; line-height:1.6; color:var(--muted); text-align:center}
+.nota strong{display:block; color:var(--fg); font-weight:600; margin-bottom:4px}
+
+/* sobre */
+#sobre{background:var(--faixa-bg); color:var(--faixa-fg); position:relative; overflow:hidden; padding:88px 0 84px}
+#sobre::before{content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(60% 50% at 12% 24%, var(--faixa-brilho), transparent 62%)}
+#sobre .wrap{position:relative}
+.sobre-topo{display:grid; grid-template-columns:1fr 40%; gap:48px; align-items:center}
+.sobre-texto h2{margin:0 0 14px; color:var(--faixa-fg)}
+.sobre-sub{font-size:clamp(17px,1.9vw,21px); line-height:1.4; font-weight:500; color:var(--accent-forte); margin:0 0 28px; max-width:30ch}
+.sobre-texto p{color:var(--faixa-fg2); font-size:16px; line-height:1.7; margin:0 0 16px; max-width:56ch}
+.sobre-texto strong{color:var(--faixa-fg); font-weight:600}
+.sobre-arte{width:100%; max-width:430px; margin-left:auto}
+.sobre-arte svg{display:block; width:100%; height:auto}
+.sobre-etapas circle{fill:#A78BFA}
+.sobre-etapas .anel{fill:none; stroke:rgba(167,139,250,.55); stroke-width:1.2}
+.sobre-num{font-size:10px; font-weight:600; letter-spacing:.18em; fill:var(--faixa-fg3)}
+.sobre-etapa{font-size:15.5px; font-weight:500; letter-spacing:-.01em; fill:var(--faixa-fg)}
+.sobre-halo{animation:sobre-pulsar 4s ease-in-out infinite; transform-box:fill-box; transform-origin:center}
+.sobre-base{margin-top:64px; padding-top:40px; border-top:1px solid var(--faixa-line);
+  display:grid; gap:18px}
+.sobre-base p{margin:0; max-width:66ch; color:var(--faixa-fg2); font-size:16px; line-height:1.7}
+.sobre-base .sobre-fecho{font-size:clamp(19px,2.2vw,24px); line-height:1.4; font-weight:500; color:var(--faixa-fg); letter-spacing:-.01em}
+.sobre-base .sobre-slogan{font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent-forte)}
+#sobre .stats{margin-top:64px; padding-top:40px; border-top:1px solid var(--faixa-line)}
+#sobre .stats span{color:var(--faixa-fg3)}
+
+/* números */
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center}
+.stats b{display:block; font-size:38px; font-weight:600; letter-spacing:-.03em; color:var(--accent-forte)}
+.stats span{font-size:14px; color:var(--muted)}
+
+/* cta */
+.cta{background:var(--faixa-bg); color:var(--faixa-fg); border:1px solid var(--faixa-line); box-shadow:var(--sombra); border-radius:var(--raio-g); padding:64px 40px; text-align:center}
+.cta h2{margin-bottom:12px}
+.cta p{color:var(--faixa-fg2); max-width:48ch; margin:0 auto 28px}
+
+/* form */
+form{display:grid; gap:14px; max-width:520px}
+form:focus{outline:none}
+label{font-size:13px; font-weight:500; color:var(--muted)}
+input,textarea{width:100%; padding:13px 15px; border-radius:var(--raio-p); border:1px solid var(--line-forte); background:var(--surface); color:var(--fg); font:inherit; font-size:15px}
+input::placeholder,textarea::placeholder{color:var(--placeholder)}
+input:focus,textarea:focus{outline:2px solid var(--accent-forte); outline-offset:1px; border-color:transparent}
+input:disabled,textarea:disabled{opacity:.55; cursor:not-allowed}
+.btn:disabled{opacity:.65; cursor:progress}
+textarea{min-height:120px; resize:vertical}
+.dica{display:block; margin-top:6px; font-size:12.5px; color:var(--faixa-fg3)}
+input:user-invalid{border-color:var(--erro); outline-color:var(--erro)}
+.status{margin:0; font-size:14px; line-height:1.5; color:var(--accent-forte)}
+.status:empty{display:none}
+.status.erro{color:var(--erro)}
+.status a{color:inherit; text-decoration:underline}
+form button[type=submit]{padding:14px 20px}
+.privacidade{margin:0; font-size:12.5px; line-height:1.5; color:var(--faixa-fg3)}
+.resumo-plano{display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+  padding:16px 18px; border-radius:14px; border:1px solid rgba(167,139,250,.38); background:rgba(167,139,250,.10)}
+.resumo-plano[hidden]{display:none}
+.resumo-texto{display:grid; gap:3px; min-width:0}
+.resumo-rotulo{font-size:11px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-forte)}
+.resumo-texto strong{font-size:17px; font-weight:600; letter-spacing:-.01em; color:var(--faixa-fg)}
+.resumo-preco{font-size:14px; color:var(--accent-forte)}
+.resumo-desc{font-size:13px; line-height:1.45; color:var(--faixa-fg2)}
+.resumo-acoes{flex:none; display:flex; flex-direction:column; gap:8px; align-items:stretch}
+.resumo-trocar,.resumo-limpar{background:none; border:1px solid var(--faixa-borda); color:var(--faixa-fg2);
+  font:inherit; font-size:13px; padding:10px 16px; border-radius:999px; cursor:pointer;
+  text-align:center; white-space:nowrap}
+.resumo-trocar{border-color:rgba(167,139,250,.6); color:var(--accent-forte)}
+.resumo-trocar:hover,.resumo-limpar:hover{border-color:var(--accent-forte); color:var(--accent-forte)}
+
+/* --- rodapé --- */
+footer{border-top:1px solid var(--line); padding:56px 0 28px; color:var(--muted); font-size:14px}
+.rodape{display:grid; grid-template-columns:minmax(240px,1.6fr) repeat(2,minmax(150px,1fr));
+  gap:40px 32px; align-items:start}
+.rodape-marca{max-width:34ch}
+.rodape-marca .logo{font-size:18px; color:var(--fg)}
+.rodape-marca p{margin:14px 0 0; line-height:1.6}
+.rodape-col h2{font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--fg); margin:0 0 14px}
+.rodape-col ul{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.rodape-col a{color:var(--muted); overflow-wrap:anywhere}
+.rodape-col a:hover{color:var(--accent-forte)}
+.rodape-base{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px;
+  margin-top:40px; padding-top:22px; border-top:1px solid var(--line)}
+.rodape-base small{font-size:13px; line-height:1.5}
+
+/* --- botão de tema --- */
+.acoes-header{display:flex; align-items:center; gap:10px}
+.tema-botao{display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; flex:none; padding:0; border-radius:999px; cursor:pointer;
+  background:none; border:1px solid var(--line); color:var(--fg);
+  transition:.2s border-color,.2s color}
+.tema-botao:hover{border-color:var(--accent-forte); color:var(--accent-forte)}
+/* No escuro oferece o sol; no claro, a lua: o ícone mostra o destino, não o estado.
+   As duas regras precisam da mesma especificidade de .tema-botao svg. */
+.tema-botao .tema-sol{display:none}
+.tema-botao .tema-lua{display:block}
+:root[data-tema="escuro"] .tema-botao .tema-sol{display:block}
+:root[data-tema="escuro"] .tema-botao .tema-lua{display:none}
