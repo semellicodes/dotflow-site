@@ -1,0 +1,29 @@
+# Normaliza as quebras de linha: o repositório guarda LF, cada máquina usa o seu.
+* text=auto eol=lf
+*.png binary
+
+# ---------------------------------------------------------------
+# Barra de linguagens do GitHub (linguist)
+#
+# Contam:   index.html, css/*.css, js/*.js
+# Não contam: imagens, favicon e arquivos de configuração/documentação.
+#
+# Não há biblioteca de terceiros no projeto — nada é vendorizado,
+# nada é gerado por build. Se algum dia entrar uma pasta vendor/,
+# marque-a com linguist-vendored.
+# ---------------------------------------------------------------
+
+# Imagens e ícones não são código.
+assets/**            linguist-detectable=false
+*.svg                linguist-detectable=false
+*.png                linguist-detectable=false
+
+# Documentação e metadados do site não devem disputar a barra.
+README.md            linguist-documentation
+robots.txt           linguist-detectable=false
+sitemap.xml          linguist-detectable=false
+
+# Garante que o que é código apareça, mesmo que o linguist hesite.
+index.html           linguist-detectable=true
+*.css                linguist-detectable=true
+*.js                 linguist-detectable=true

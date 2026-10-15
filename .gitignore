@@ -1,0 +1,28 @@
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores e ferramentas locais
+.vscode/
+.idea/
+.claude/
+*.swp
+*~
+
+# Ambiente e segredos — nenhum é usado hoje, mas evita acidente futuro
+.env
+.env.*
+*.pem
+*.key
+
+# Dependências e build, caso o projeto ganhe uma etapa de build
+node_modules/
+dist/
+build/
+*.log
+
+# Cópias e rascunhos
+*.bak
+*.orig
+index.backup.html
