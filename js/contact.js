@@ -13,10 +13,22 @@
   var campoEmail = document.getElementById('email');
   var assunto = document.getElementById('assunto');
   var tel = document.getElementById('whatsapp');
+  var linkEmail = document.getElementById('contato-email');
+  var destinoEmail = linkEmail.href;
   var selecao = null;
   var enviando = false;
 
   function rotulo() { return selecao ? 'Solicitar orçamento' : 'Enviar mensagem'; }
+
+  linkEmail.addEventListener('click', function () {
+    var campos = new FormData(form);
+    var corpo = ['Nome ' + campos.get('nome'), 'E-mail ' + campos.get('email'),
+      'WhatsApp ' + campos.get('whatsapp')];
+    if (campos.get('plano')) corpo.push('Plano ' + campos.get('plano'));
+    corpo.push('', campos.get('mensagem'));
+    linkEmail.href = destinoEmail + '?subject=' + encodeURIComponent(assunto.value) +
+      '&body=' + encodeURIComponent(corpo.join('\n'));
+  });
 
   /* ---- plano escolhido ---- */
   document.addEventListener('dotflow:plano', function (e) {
@@ -59,14 +71,21 @@
     botao.disabled = true;
     botao.textContent = 'Enviando…';
     aviso.className = 'status';
-    aviso.textContent = '';
+    aviso.textContent = 'Aguarde a confirmação do envio. O serviço pode levar até um minuto para responder.';
+    var controle = new AbortController();
+    // Cancelar a espera não garante que o serviço deixou de processar a mensagem.
+    var espera = setTimeout(function () { controle.abort(); }, 75000);
 
     fetch(form.action, {
       method: 'POST',
+      signal: controle.signal,
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(Object.fromEntries(new FormData(form)))
     })
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (!r.ok) throw new Error('Falha no serviço de envio');
+        return r.json();
+      })
       .then(function (dados) {
         // O FormSubmit responde 200 mesmo em falha: quem decide é o campo success.
         if (String(dados.success) !== 'true') throw new Error(dados.message || 'falhou');
@@ -78,10 +97,11 @@
       .catch(function () {
         // Em falha os campos ficam como estão: ninguém perde o que escreveu.
         aviso.className = 'status erro';
-        aviso.innerHTML = 'Não foi possível enviar agora. Chame no WhatsApp ou escreva para ' +
-          '<a href="mailto:dotflowcriacoes@gmail.com">dotflowcriacoes@gmail.com</a>.';
+        aviso.textContent = 'Não conseguimos confirmar o envio. Seus dados continuam preenchidos. ' +
+          'Você pode tentar novamente ou usar a opção de e-mail abaixo.';
       })
       .finally(function () {
+        clearTimeout(espera);
         enviando = false;
         botao.disabled = false;
         botao.textContent = rotulo();
