@@ -219,7 +219,7 @@ input:user-invalid{border-color:var(--erro); outline-color:var(--erro)}
 .status{margin:0; font-size:14px; line-height:1.5; color:var(--accent-forte)}
 .status:empty{display:none}
 .status.erro{color:var(--erro)}
-.status a{color:inherit; text-decoration:underline}
+.dica a{color:var(--accent-forte); text-decoration:underline}
 form button[type=submit]{padding:14px 20px}
 .privacidade{margin:0; font-size:12.5px; line-height:1.5; color:var(--faixa-fg3)}
 .resumo-plano{display:flex; align-items:flex-start; justify-content:space-between; gap:16px;

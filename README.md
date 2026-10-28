@@ -103,6 +103,17 @@ adulterado nunca chega ao formulário.
 
 Os contatos chegam em **dotflowcriacoes@gmail.com** pelo endpoint AJAX do FormSubmit.
 
+O formulário aguarda a confirmação do serviço por até 75 segundos. Se houver falha
+ou demora, preserva os campos e informa que não foi possível confirmar o envio.
+Cancelar a espera não garante que o FormSubmit deixou de processar a mensagem.
+
+A opção "enviar por e-mail" funciona independentemente do FormSubmit e abre o
+aplicativo de e-mail do visitante com os dados atuais e o plano escolhido. O
+visitante ainda precisa enviar a mensagem nesse aplicativo.
+
+Os testes do formulário rodam com `node --test tests/contact.test.cjs`, sem instalar
+dependências. O Node é usado somente nos testes, não para servir ou publicar o site.
+
 Campos enviados: `nome`, `email`, `whatsapp`, `mensagem`, `plano` (só quando um plano
 foi escolhido), mais `_subject`, `_replyto`, `_template` e `_honey` (campo-armadilha
 anti-robô).
