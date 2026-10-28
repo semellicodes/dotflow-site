@@ -1,4 +1,4 @@
-/* Dotflow — formulário de contato: máscara, estados e envio ao FormSubmit.
+/* Dotflow — formulário de contato: máscara, estados e envio ao Web3Forms.
    Ouve 'dotflow:plano' (disparado por js/plans.js) para refletir o plano
    escolhido nos campos ocultos e no rótulo do botão.
    Carregue ANTES de js/plans.js, que dispara o evento ao restaurar a seleção. */
@@ -9,8 +9,6 @@
   var botao = form.querySelector('button[type=submit]');
   var aviso = form.querySelector('.status');
   var campoPlano = document.getElementById('campo-plano');
-  var campoReplyTo = document.getElementById('campo-replyto');
-  var campoEmail = document.getElementById('email');
   var assunto = document.getElementById('assunto');
   var tel = document.getElementById('whatsapp');
   var linkEmail = document.getElementById('contato-email');
@@ -56,25 +54,17 @@
     tel.setCustomValidity('Informe o WhatsApp com DDD, por exemplo (11) 98765-4321.');
   });
 
-  /* ---- envio ----
-     O e-mail visível vai como "email" para o FormSubmit mostrar um rótulo
-     legível; _replyto é o espelho oculto que faz o Responder voltar ao cliente. */
-  campoEmail.addEventListener('input', function () {
-    campoReplyTo.value = campoEmail.value;
-  });
-
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (enviando) return;           // trava o envio duplo por Enter durante o envio
     enviando = true;
-    campoReplyTo.value = campoEmail.value;
     botao.disabled = true;
     botao.textContent = 'Enviando…';
     aviso.className = 'status';
-    aviso.textContent = 'Aguarde a confirmação do envio. O serviço pode levar até um minuto para responder.';
+    aviso.textContent = 'Enviando sua mensagem…';
     var controle = new AbortController();
     // Cancelar a espera não garante que o serviço deixou de processar a mensagem.
-    var espera = setTimeout(function () { controle.abort(); }, 75000);
+    var espera = setTimeout(function () { controle.abort(); }, 20000);
 
     fetch(form.action, {
       method: 'POST',
@@ -87,10 +77,8 @@
         return r.json();
       })
       .then(function (dados) {
-        // O FormSubmit responde 200 mesmo em falha: quem decide é o campo success.
-        if (String(dados.success) !== 'true') throw new Error(dados.message || 'falhou');
+        if (dados.success !== true) throw new Error(dados.message || 'falhou');
         form.reset();
-        campoReplyTo.value = '';
         document.dispatchEvent(new CustomEvent('dotflow:limpar-plano'));
         aviso.textContent = 'Mensagem enviada! Respondemos em até 24 horas.';
       })

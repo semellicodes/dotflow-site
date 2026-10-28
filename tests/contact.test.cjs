@@ -12,10 +12,12 @@ function iniciar(fetch) {
   const botao = elemento('botao');
   const aviso = elemento('aviso');
   const form = elemento('contato-form');
-  form.action = 'https://formsubmit.co/ajax/teste';
+  form.action = 'https://api.web3forms.com/submit';
   form.querySelector = seletor => seletor === '.status' ? aviso : botao;
   form.reset = () => { form.limpo = true; };
-  for (const id of ['campo-plano', 'campo-replyto', 'email', 'whatsapp', 'nome', 'msg']) elemento(id);
+  for (const id of ['campo-plano', 'email', 'whatsapp', 'nome', 'msg']) elemento(id);
+  elemento('access_key', 'chave-publica-de-teste');
+  elemento('from_name', 'Dotflow');
   elemento('assunto', 'Novo contato pelo site Dotflow');
   elemento('contato-email').href = 'mailto:dotflowcriacoes@gmail.com';
   elementos['campo-plano'].disabled = true;
@@ -26,9 +28,9 @@ function iniciar(fetch) {
     dispatchEvent: evento => { if (eventos[evento.type]) eventos[evento.type](evento); } };
   class FormData extends Map {
     constructor() {
-      super(['nome', 'email', 'whatsapp', '_replyto', '_subject', 'mensagem', 'plano']
-        .map((nome, i) => [nome, elementos[['nome', 'email', 'whatsapp', 'campo-replyto',
-          'assunto', 'msg', 'campo-plano'][i]]])
+      super(['nome', 'email', 'whatsapp', 'subject', 'mensagem', 'plano', 'access_key', 'from_name']
+        .map((nome, i) => [nome, elementos[['nome', 'email', 'whatsapp',
+          'assunto', 'msg', 'campo-plano', 'access_key', 'from_name'][i]]])
         .filter(([, campo]) => !campo.disabled).map(([nome, campo]) => [nome, campo.value]));
     }
   }
@@ -51,7 +53,7 @@ test('a demora encerra a espera sem limpar campos ou deixar o botão preso', asy
   }));
   app.elementos.msg.value = 'Projeto com detalhes';
   await app.enviar();
-  assert.equal(app.temporizador.duracao, 75000);
+  assert.equal(app.temporizador.duracao, 20000);
   assert.equal(app.botao.disabled, true);
   app.temporizador.callback();
   await new Promise(resolve => setImmediate(resolve));
@@ -91,4 +93,21 @@ test('somente a confirmação bem-sucedida limpa o formulário', async () => {
     assert.equal(app.botao.disabled, false);
     assert.equal(app.temporizador.limpo, true);
   }
+});
+
+test('o envio leva o destino, o e-mail de resposta e o assunto do plano ao Web3Forms', async () => {
+  let requisicao;
+  const app = iniciar(async (url, opcoes) => {
+    requisicao = { url, dados: JSON.parse(opcoes.body) };
+    return { ok: true, json: async () => ({ success: true }) };
+  });
+  app.elementos.email.value = 'cliente@example.com';
+  app.eventos['dotflow:plano']({ detail: { nome: 'Essencial', preco: 'R$ 600' } });
+  await app.enviar();
+  assert.equal(requisicao.url, 'https://api.web3forms.com/submit');
+  assert.equal(requisicao.dados.access_key, 'chave-publica-de-teste');
+  assert.equal(requisicao.dados.email, 'cliente@example.com');
+  assert.match(requisicao.dados.subject, /Essencial/);
+  assert.match(requisicao.dados.plano, /Essencial/);
+  assert.equal(Object.keys(requisicao.dados).some(chave => chave.startsWith('_')), false);
 });
