@@ -427,13 +427,12 @@
     <div class="cta">
       <h2>Vamos tirar seu projeto do papel?</h2>
       <p>Site, loja virtual ou sistema sob medida: conte o que você precisa e respondemos com um plano e um orçamento em até 24 horas.</p>
-      <form id="contato-form" tabindex="-1" action="https://formsubmit.co/ajax/8a9423162a9a49c1545f856c3f1453d0" method="POST" style="margin:0 auto; text-align:left">
-        <input type="hidden" id="assunto" name="_subject" value="Novo contato pelo site Dotflow">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
+      <form id="contato-form" tabindex="-1" action="https://api.web3forms.com/submit" method="POST" style="margin:0 auto; text-align:left">
+        <input type="hidden" name="access_key" value="d9d7989b-de97-428d-8d41-5bd8797cd404">
+        <input type="hidden" id="assunto" name="subject" value="Novo contato pelo site Dotflow">
+        <input type="hidden" name="from_name" value="Dotflow">
         <input type="hidden" id="campo-plano" name="plano" disabled>
-        <input type="hidden" id="campo-replyto" name="_replyto">
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off" aria-hidden="true">
 
         <div id="resumo-plano" class="resumo-plano" hidden>
           <div class="resumo-texto">

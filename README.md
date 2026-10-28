@@ -44,9 +44,8 @@ Cada arquivo roda dentro de uma IIFE com `'use strict'`: nada vaza para `window`
 
 ## Rodando localmente
 
-Qualquer servidor estático serve. O formulário **não funciona** ao abrir o arquivo
-direto pelo `file://` — o FormSubmit recusa requisições sem origem HTTP, e os
-arquivos de CSS e JS também podem ser bloqueados.
+Qualquer servidor estático serve. Use HTTP para testar o formulário e os arquivos
+do site, em vez de abrir o HTML diretamente pelo `file://`.
 
 ```bash
 python3 -m http.server 4321
@@ -101,13 +100,15 @@ adulterado nunca chega ao formulário.
 
 ## Formulário de contato
 
-Os contatos chegam em **dotflowcriacoes@gmail.com** pelo endpoint AJAX do FormSubmit.
+Os contatos chegam em **dotflowcriacoes@gmail.com** pelo Web3Forms. A chave pública
+`access_key` do formulário identifica o destinatário e fica no `index.html`.
+O campo `email` define o endereço para responder ao visitante.
 
-O formulário aguarda a confirmação do serviço por até 75 segundos. Se houver falha
+O formulário aguarda a confirmação do serviço por até 20 segundos. Se houver falha
 ou demora, preserva os campos e informa que não foi possível confirmar o envio.
-Cancelar a espera não garante que o FormSubmit deixou de processar a mensagem.
+Cancelar a espera não garante que o serviço deixou de processar a mensagem.
 
-A opção "enviar por e-mail" funciona independentemente do FormSubmit e abre o
+A opção "enviar por e-mail" funciona independentemente do Web3Forms e abre o
 aplicativo de e-mail do visitante com os dados atuais e o plano escolhido. O
 visitante ainda precisa enviar a mensagem nesse aplicativo.
 
@@ -115,25 +116,27 @@ Os testes do formulário rodam com `node --test tests/contact.test.cjs`, sem ins
 dependências. O Node é usado somente nos testes, não para servir ou publicar o site.
 
 Campos enviados: `nome`, `email`, `whatsapp`, `mensagem`, `plano` (só quando um plano
-foi escolhido), mais `_subject`, `_replyto`, `_template` e `_honey` (campo-armadilha
-anti-robô).
+foi escolhido), mais `access_key`, `subject`, `from_name` e `botcheck` quando marcado
+por um robô.
 
-### Limites de segurança — leia antes de confiar no formulário
+### Configuração do serviço
 
-- O endereço de e-mail fica **visível no HTML**, pois faz parte da URL do endpoint.
-  É assim que o FormSubmit funciona; para esconder é preciso trocar o endereço pelo
-  token alfanumérico que eles fornecem após a ativação.
-- A validação dos campos é **só do navegador**. Qualquer pessoa pode enviar um POST
-  direto ao endpoint com qualquer conteúdo. O `_honey` barra robôs simples, não
-  envios manuais.
-- `_captcha` está **desligado** para o envio não sair da página. Se começar a chegar
-  spam, ligue o captcha ou troque por um endpoint próprio.
-- Não há limite de taxa nem registro dos envios.
+- A chave de formulário é pública e pode ficar no HTML. Ela permite enviar contatos
+  ao destinatário configurado, sem dar acesso à conta ou à caixa de e-mail.
+- O campo `botcheck` complementa a proteção de spam do serviço. A validação visível
+  continua sendo feita pelo navegador.
+- O plano gratuito tem limite de 250 envios por mês. Conferir o uso no painel do
+  serviço e revisar o plano se o volume aumentar.
+- O site não guarda cópia dos envios. O processamento e a entrega dependem do
+  Web3Forms.
 
 ### Trocar o destino
 
-Mude o `action` do `<form id="contato-form">`. Nenhuma outra parte do código depende
-disso.
+Crie ou configure o formulário no painel do Web3Forms com o e-mail de destino
+verificado e atualize o `access_key` no HTML. Se o e-mail da empresa mudar, atualize
+também os links `mailto` no formulário e no rodapé.
+
+Documentação do serviço em <https://docs.web3forms.com/>.
 
 ## Publicação
 
@@ -158,12 +161,8 @@ e a prévia de compartilhamento apontam para um endereço que não serve o site:
 | `robots.txt` | linha `Sitemap:` |
 | `sitemap.xml` | `<loc>` e `<lastmod>` |
 
-> **Armadilha ao trocar de domínio:** a ativação do FormSubmit é por **domínio**, não
-> só por endpoint. Num endereço novo o formulário volta a responder
-> `"This form needs Activation"` e **para de enviar** até alguém clicar no link de
-> ativação que chega por e-mail. O visitante só vê a mensagem de erro e vai embora,
-> sem avisar ninguém. Por isso, **o primeiro teste depois de apontar qualquer
-> domínio novo é enviar o formulário** e confirmar a chegada do e-mail.
+Depois de mudar o domínio, teste o formulário e confirme a chegada do e-mail.
+Se houver uma restrição de domínio configurada no Web3Forms, atualize-a também.
 
 ## Rodapé
 
